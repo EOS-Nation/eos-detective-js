@@ -19,11 +19,13 @@ npm install --save eos-detective
 ## Quick Start
 
 ```js
-const EosDetective = require("eos-detective")
+import EosDetective from "eos-detective"
 
 const endpoint = "eosdetective.io"
 const token = "<Paste your API token here>"
-const api = new EosDetective(endpoint, token)(async () => {
+const api = new EosDetective(endpoint, token)
+
+;(async () => {
   const transfers = await api.transfers(["bitfinexdep1"], {
     direction: "incoming",
     quantity_min: 10000
