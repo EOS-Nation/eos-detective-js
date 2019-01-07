@@ -25,10 +25,11 @@ const endpoint = "eosdetective.io"
 const token = "<Paste your API token here>"
 const api = new EosDetective(endpoint, token)
 
-;(async () => {
+async function main() {
   const transfers = await api.transfers(["bitfinexdep1"], {
     direction: "incoming",
     quantity_min: 10000
   })
-})()
+}
+main()
 ```
