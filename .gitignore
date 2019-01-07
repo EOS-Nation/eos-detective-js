@@ -1,3 +1,9 @@
+# Build
+dist
+
+# Documentation
+docs
+
 # Logs
 logs
 *.log
