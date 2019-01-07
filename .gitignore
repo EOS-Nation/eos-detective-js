@@ -1,5 +1,7 @@
 # Build
 dist
+.firebase
+docs
 
 # Logs
 logs
