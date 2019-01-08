@@ -13,12 +13,12 @@ export class Account {
     }
   }
 
-  public getName() {
+  get name() {
     return this._name.replace("accounts/", "")
   }
 
   public toString(): string {
-    return this.getName()
+    return this.name
   }
 
   public toJson(): any {

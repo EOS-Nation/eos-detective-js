@@ -95,10 +95,10 @@ export async function transfers(
   const accountsData: Account[] = []
 
   transfersData.forEach((transfer) => {
-    if (!accountsData.some((account) => account.getName() === transfer.to.getName())) {
+    if (!accountsData.some((account) => account.name === transfer.to.name)) {
       accountsData.push(transfer.to)
     }
-    if (!accountsData.some((account) => account.getName() === transfer.from.getName())) {
+    if (!accountsData.some((account) => account.name === transfer.from.name)) {
       accountsData.push(transfer.from)
     }
   })
