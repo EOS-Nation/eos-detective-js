@@ -29,26 +29,61 @@ export async function transfers(
      */
     accumulated?: boolean
     /**
-     * @default 0.1
+     * Minimum token volume of each transfer.
      */
     quantity_min?: number
+    /**
+     * Maximum token volume of each transfer.
+     */
+    quantity_max?: number
+    /**
+     * Minimum token volume of accumulated transfers.
+     */
+    accumulated_min?: number
+    /**
+     * Maximum token volume of accumulated transfers.
+     */
+    accumulated_max?: number
+    /**
+     * Minimum transaction count of accumulated transfers.
+     */
+    count_min?: number
+    /**
+     * Maximum transaction count of accumulated transfers.
+     */
+    count_max?: number
   }
 ): Promise<{ accounts: Account[]; transfers: Transfer[] }> {
-  // default options
-  const contract = options.contract !== undefined ? options.contract : "eosio.token"
-  const symbol = options.symbol !== undefined ? options.symbol : "EOS"
-  const direction = options.direction !== undefined ? options.direction : "both"
-  const accumulated = options.accumulated !== undefined ? options.accumulated : true
-  const quantity_min = options.quantity_min !== undefined ? options.quantity_min : 0.1
+  const queryParams: any = { accounts }
+
+  // default params
+  queryParams.symbol = options.symbol || "EOS"
+  queryParams.direction = options.direction || "both"
+  queryParams.accumulated = options.accumulated || true
+
+  // optional params
+  if (options.quantity_min) {
+    queryParams.quantity_min = options.quantity_min
+  }
+  if (options.quantity_max) {
+    queryParams.quantity_max = options.quantity_max
+  }
+  if (options.accumulated_min) {
+    queryParams.accumulated_min = options.accumulated_min
+  }
+  if (options.accumulated_max) {
+    queryParams.accumulated_max = options.accumulated_max
+  }
+  if (options.count_min) {
+    queryParams.count_min = options.count_min
+  }
+  if (options.count_max) {
+    queryParams.count_max = options.count_max
+  }
 
   const res = await Axios.request<Transfer[]>({
     url: "https://api.eosdetective.semiofficial.io/transfers",
-    params: {
-      accounts,
-      direction,
-      accumulated,
-      quantity_min
-    },
+    params: queryParams,
     transformResponse: (data: any) => {
       return JSON.parse(data).data._documents.map((value: any) => {
         return Transfer.fromJson(value)

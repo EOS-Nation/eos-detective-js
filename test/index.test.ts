@@ -1,7 +1,8 @@
 import { transfers } from "../src"
 import Axios from "axios"
 
-/* Debug axios calls
+/* Debug axios calls */
+/*
 Axios.interceptors.request.use(function(config) {
   // Do something before request is sent
   console.log(config)
@@ -12,6 +13,6 @@ Axios.interceptors.request.use(function(config) {
 })
 */
 
-transfers(["eosnationftw"], { quantity_min: 10000 }).then((res) => {
+transfers(["eosnationftw"], { quantity_min: 1000, count_min: 5 }).then((res) => {
   console.log(res)
 })
