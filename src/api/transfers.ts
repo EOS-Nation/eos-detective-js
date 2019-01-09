@@ -1,6 +1,7 @@
 import { Transfer } from "../types/Transfer"
 import { Account } from "../types/Account"
 import Axios from "axios"
+import { ApiResponse } from "../types/ApiResponse"
 
 /**
  * Transfers
@@ -53,7 +54,7 @@ export async function transfers(
      */
     count_max?: number
   }
-): Promise<{ accounts: Account[]; transfers: Transfer[] }> {
+): Promise<ApiResponse> {
   const queryParams: any = { accounts }
 
   // default params
@@ -81,30 +82,30 @@ export async function transfers(
     queryParams.count_max = options.count_max
   }
 
-  const res = await Axios.request<Transfer[]>({
-    url: "https://api.eosdetective.semiofficial.io/transfers",
+  const res = await Axios.request<ApiResponse>({
+    url: "/transfers",
     params: queryParams,
     transformResponse: (data: any) => {
-      return JSON.parse(data).data._documents.map((value: any) => {
+      const jsonRes = JSON.parse(data)
+
+      const transfersData: Transfer[] = jsonRes.data._documents.map((value: any) => {
         return Transfer.fromJson(value)
       })
+
+      const accountsData: Account[] = []
+
+      transfersData.forEach((transfer) => {
+        if (!accountsData.some((account) => account.name === transfer.to.name)) {
+          accountsData.push(transfer.to)
+        }
+        if (!accountsData.some((account) => account.name === transfer.from.name)) {
+          accountsData.push(transfer.from)
+        }
+      })
+
+      return new ApiResponse(accountsData, transfersData, jsonRes.limited)
     }
   })
 
-  const transfersData = await res.data
-  const accountsData: Account[] = []
-
-  transfersData.forEach((transfer) => {
-    if (!accountsData.some((account) => account.name === transfer.to.name)) {
-      accountsData.push(transfer.to)
-    }
-    if (!accountsData.some((account) => account.name === transfer.from.name)) {
-      accountsData.push(transfer.from)
-    }
-  })
-
-  return {
-    accounts: accountsData,
-    transfers: transfersData
-  }
+  return await res.data
 }
