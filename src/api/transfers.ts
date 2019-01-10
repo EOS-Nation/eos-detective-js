@@ -60,7 +60,7 @@ export async function transfers(
   // default params
   queryParams.symbol = options.symbol || "EOS"
   queryParams.direction = options.direction || "both"
-  queryParams.accumulated = options.accumulated || true
+  queryParams.accumulated = options.accumulated === undefined ? true : options.accumulated
 
   // optional params
   if (options.quantity_min) {
@@ -86,6 +86,8 @@ export async function transfers(
     url: "/transfers",
     params: queryParams,
     transformResponse: (data: any) => {
+      console.log(data)
+
       const jsonRes = JSON.parse(data)
 
       const transfersData: Transfer[] = jsonRes.data._documents.map((value: any) => {

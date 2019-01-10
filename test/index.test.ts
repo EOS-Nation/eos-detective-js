@@ -18,6 +18,6 @@ const endpoint = "http://localhost:8529/_db/eosdetective"
 
 config(token, endpoint)
 
-transfers(["eosnationftw"], { quantity_min: 1000, count_min: 5 }).then((res) => {
+transfers(["eosnationftw"], { quantity_min: 1000, accumulated: true }).then((res) => {
   console.log(res)
 })
