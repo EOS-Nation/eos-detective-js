@@ -18,6 +18,11 @@ const endpoint = "http://localhost:8529/_db/eosdetective"
 
 config(token, endpoint)
 
-transfers(["eosnationftw"], { quantity_min: 1000, accumulated: true }).then((res) => {
+transfers(["eosnationftw"], {
+  quantity_min: 1000,
+  accumulated: false,
+  time_min: new Date("2018-06-28T00:17:50.500Z"),
+  time_max: new Date("2018-06-28T23:18:43.000Z")
+}).then((res) => {
   console.log(res)
 })

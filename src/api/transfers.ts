@@ -38,6 +38,14 @@ export async function transfers(
      */
     quantity_max?: number
     /**
+     * Minimum token time of each transfer.
+     */
+    time_min?: Date
+    /**
+     * Maximum token time of each transfer.
+     */
+    time_max?: Date
+    /**
      * Minimum token volume of accumulated transfers.
      */
     accumulated_min?: number
@@ -68,6 +76,12 @@ export async function transfers(
   }
   if (options.quantity_max) {
     queryParams.quantity_max = options.quantity_max
+  }
+  if (options.time_min) {
+    queryParams.time_min = options.time_min
+  }
+  if (options.time_max) {
+    queryParams.time_max = options.time_max
   }
   if (options.accumulated_min) {
     queryParams.accumulated_min = options.accumulated_min
