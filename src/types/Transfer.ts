@@ -8,6 +8,7 @@ export class Transfer {
   private readonly _time?: Date
   private readonly _blockNum?: number
   private readonly _count?: number
+  private readonly _trxId?: string
 
   public constructor(
     from: string,
@@ -16,7 +17,8 @@ export class Transfer {
     symbol: string,
     time?: Date,
     blockNum?: number,
-    count?: number
+    count?: number,
+    trxId?: string
   ) {
     this._from = new Account(from)
     this._to = new Account(to)
@@ -25,6 +27,7 @@ export class Transfer {
     this._time = time
     this._blockNum = blockNum
     this._count = count
+    this._trxId = trxId
   }
 
   public static fromJson(value: any): Transfer {
@@ -35,7 +38,8 @@ export class Transfer {
       value.symbol,
       value.time === undefined ? undefined : new Date(value.time),
       value!.block_num,
-      value!.count
+      value!.count,
+      value!.trx_id
     )
   }
 
@@ -69,5 +73,9 @@ export class Transfer {
 
   get count(): number | undefined {
     return this._count
+  }
+
+  get trxId(): string | undefined {
+    return this._trxId
   }
 }

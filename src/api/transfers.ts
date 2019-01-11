@@ -39,6 +39,8 @@ export async function transfers(
     quantity_max?: number
     /**
      * Minimum time of each transfer.
+     *
+     * @default Yesterday
      */
     time_min?: Date
     /**
@@ -64,11 +66,16 @@ export async function transfers(
   }
 ): Promise<ApiResponse> {
   const queryParams: any = { accounts }
+  const yesterday = new Date(Date.now())
+  yesterday.setDate(yesterday.getDate() - 1)
 
   // default params
   queryParams.symbol = options.symbol || "EOS"
   queryParams.direction = options.direction || "both"
   queryParams.accumulated = options.accumulated === undefined ? true : options.accumulated
+
+  queryParams.time_min =
+    options.time_min === undefined ? yesterday.toISOString() : options.time_min.toISOString()
 
   // optional params
   if (options.quantity_min) {
@@ -76,9 +83,6 @@ export async function transfers(
   }
   if (options.quantity_max) {
     queryParams.quantity_max = options.quantity_max
-  }
-  if (options.time_min) {
-    queryParams.time_min = options.time_min.toISOString()
   }
   if (options.time_max) {
     queryParams.time_max = options.time_max.toISOString()
