@@ -21,8 +21,9 @@ config(token, endpoint)
 transfers(["eosnationftw"], {
   quantity_min: 1000,
   accumulated: false,
-  time_min: new Date("2018-06-28T00:17:50.500Z"),
-  time_max: new Date("2018-06-28T23:18:43.000Z")
+  time_min: new Date("2018-06-28T22:17:50.500Z"),
+  // time_max: new Date("2018-06-28T22:18:43.000Z")
+  time_max: new Date(Date.UTC(2018, 5, 28, 22, 18, 43))
 }).then((res) => {
   console.log(res)
 })
