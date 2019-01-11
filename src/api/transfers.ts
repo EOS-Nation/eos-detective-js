@@ -100,8 +100,6 @@ export async function transfers(
     url: "/transfers",
     params: queryParams,
     transformResponse: (data: any) => {
-      console.log(data)
-
       const jsonRes = JSON.parse(data)
 
       const transfersData: Transfer[] = jsonRes.data._documents.map((value: any) => {
