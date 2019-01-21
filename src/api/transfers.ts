@@ -75,7 +75,8 @@ export async function transfers(
   queryParams.symbol = options.symbol || "EOS"
   queryParams.direction = options.direction || "both"
   queryParams.accumulated = options.accumulated === undefined ? true : options.accumulated
-  queryParams.quantity_min = options.quantity_min ? Math.round(options.quantity_min * 10000) : 1000
+  queryParams.quantity_min =
+    options.quantity_min === undefined ? 1000 : Math.round(options.quantity_min * 10000)
 
   queryParams.time_min =
     options.time_min === undefined ? yesterday.toISOString() : options.time_min.toISOString()
