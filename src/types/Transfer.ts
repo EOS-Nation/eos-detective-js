@@ -1,4 +1,5 @@
 import { Account } from "./Account"
+import { preciseRound } from "../util"
 
 export class Transfer {
   private readonly _from: Account
@@ -22,7 +23,7 @@ export class Transfer {
   ) {
     this._from = new Account(from)
     this._to = new Account(to)
-    this._quantity = quantity
+    this._quantity = preciseRound(quantity / 10000, 4)
     this._symbol = symbol
     this._time = time
     this._blockNum = blockNum

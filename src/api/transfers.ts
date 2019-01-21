@@ -31,6 +31,8 @@ export async function transfers(
     accumulated?: boolean
     /**
      * Minimum token volume of each transfer.
+     *
+     * @default 0.1
      */
     quantity_min?: number
     /**
@@ -73,25 +75,24 @@ export async function transfers(
   queryParams.symbol = options.symbol || "EOS"
   queryParams.direction = options.direction || "both"
   queryParams.accumulated = options.accumulated === undefined ? true : options.accumulated
+  queryParams.quantity_min = options.quantity_min ? Math.round(options.quantity_min * 10000) : 1000
 
   queryParams.time_min =
     options.time_min === undefined ? yesterday.toISOString() : options.time_min.toISOString()
 
   // optional params
-  if (options.quantity_min) {
-    queryParams.quantity_min = options.quantity_min
-  }
+
   if (options.quantity_max) {
-    queryParams.quantity_max = options.quantity_max
+    queryParams.quantity_max = Math.round(options.quantity_max * 10000)
   }
   if (options.time_max) {
     queryParams.time_max = options.time_max.toISOString()
   }
   if (options.accumulated_min) {
-    queryParams.accumulated_min = options.accumulated_min
+    queryParams.accumulated_min = Math.round(options.accumulated_min * 10000)
   }
   if (options.accumulated_max) {
-    queryParams.accumulated_max = options.accumulated_max
+    queryParams.accumulated_max = Math.round(options.accumulated_max * 10000)
   }
   if (options.count_min) {
     queryParams.count_min = options.count_min
