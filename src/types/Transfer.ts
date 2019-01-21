@@ -5,6 +5,7 @@ export class Transfer {
   private readonly _to: Account
   private readonly _quantity: number
   private readonly _symbol: string
+  private readonly _contract: string
   private readonly _time?: Date
   private readonly _blockNum?: number
   private readonly _count?: number
@@ -15,6 +16,7 @@ export class Transfer {
     to: string,
     quantity: number,
     symbol: string,
+    contract: string,
     time?: Date,
     blockNum?: number,
     count?: number,
@@ -24,6 +26,7 @@ export class Transfer {
     this._to = new Account(to)
     this._quantity = quantity
     this._symbol = symbol
+    this._contract = contract
     this._time = time
     this._blockNum = blockNum
     this._count = count
@@ -36,6 +39,7 @@ export class Transfer {
       value.to,
       value.quantity,
       value.symbol,
+      value.contract,
       value.time === undefined ? undefined : new Date(value.time),
       value!.block_num,
       value!.count,
@@ -61,6 +65,10 @@ export class Transfer {
 
   get symbol(): string {
     return this._symbol
+  }
+
+  get contract(): string {
+    return this._contract
   }
 
   get time(): Date | undefined {
