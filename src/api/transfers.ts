@@ -30,6 +30,12 @@ export async function transfers(
      */
     accumulated?: boolean
     /**
+     * Accounts to exclude from query.
+     *
+     * @default "eosio.stake", "eosio.ram", "eosio.ramfee"
+     */
+    excludes?: string[]
+    /**
      * Minimum token volume of each transfer.
      *
      * @default 0.1
@@ -75,6 +81,7 @@ export async function transfers(
   queryParams.symbol = options.symbol || "EOS"
   queryParams.direction = options.direction || "both"
   queryParams.accumulated = options.accumulated === undefined ? true : options.accumulated
+  queryParams.excludes = options.excludes || ["eosio.ram", "eosio.ramfee", "eosio.stake"]
   queryParams.quantity_min =
     options.quantity_min === undefined ? 1000 : Math.round(options.quantity_min * 10000)
 
@@ -82,7 +89,6 @@ export async function transfers(
     options.time_min === undefined ? yesterday.toISOString() : options.time_min.toISOString()
 
   // optional params
-
   if (options.quantity_max) {
     queryParams.quantity_max = Math.round(options.quantity_max * 10000)
   }
