@@ -1,5 +1,6 @@
 import { transfers, config } from "../src"
 import Axios from "axios"
+import { accounts } from "../src/api/accounts"
 
 /* Debug axios calls */
 /*
@@ -21,13 +22,17 @@ Axios.interceptors.response.use(function(config) {
   console.log(error)
   // Do something with request error
   return Promise.reject(error)
-})*/
+})
+*/
 
 const token = "L9MVfwaeoPxNFaMxDEf6hbbpxjEdR5nHTLK2c4f9iNnxcmYj"
 const endpoint = "https://api.eosdetective.semiofficial.io/v0/"
 
 config(token, endpoint)
 
+accounts("system").then((res) => console.log(res))
+
+/*
 transfers(["eosnationftw"], {
   // quantity_min: 1000,
   accumulated: false,
@@ -37,4 +42,4 @@ transfers(["eosnationftw"], {
   // time_max: new Date(Date.UTC(2018, 5, 28, 22, 18, 43))
 }).then((res) => {
   console.log(res)
-})
+})*/
