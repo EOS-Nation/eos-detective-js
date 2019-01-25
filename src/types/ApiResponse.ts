@@ -3,16 +3,30 @@ import { Transfer } from "./Transfer"
 
 export class ApiResponse<T> {
 
-  private readonly _data: T
+  private readonly _data: T | undefined
+  private readonly _error: ErrorData | undefined
 
-  constructor(data: T) {
+  constructor(data?: T, error?: ErrorData) {
     this._data = data
+    this._error = error
   }
 
-  get data(): T {
+  public isError(): boolean {
+    return this._error != undefined
+  }
+
+  get data(): T | undefined {
     return this._data
   }
 
+  get error(): ErrorData | undefined {
+    return this._error
+  }
+}
+
+export interface ErrorData {
+  code: number,
+  errorMessage: string
 }
 
 export class TransfersData {
