@@ -82,11 +82,8 @@ export async function transfers(
   queryParams.direction = options.direction || "both"
   queryParams.accumulated = options.accumulated === undefined ? true : options.accumulated
   queryParams.excludes = options.excludes || ["eosio.ram", "eosio.ramfee", "eosio.stake"]
-  queryParams.quantity_min =
-    options.quantity_min === undefined ? 1000 : Math.round(options.quantity_min * 10000)
-
-  queryParams.time_min =
-    options.time_min === undefined ? yesterday.toISOString() : options.time_min.toISOString()
+  queryParams.quantity_min = options.quantity_min === undefined ? 1000 : Math.round(options.quantity_min * 10000)
+  queryParams.time_min = options.time_min === undefined ? yesterday.toISOString() : options.time_min.toISOString()
 
   // optional params
   if (options.quantity_max) { queryParams.quantity_max = Math.round(options.quantity_max * 10000) }
