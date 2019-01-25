@@ -1,6 +1,6 @@
 # EOS Detective
 
-EOS Detective Javascript Library <https://eosdetectvie.io> API on EOS networks.
+EOS Detective Javascript Library <https://docs.eosdetective.io> API on EOS networks.
 
 ## Install
 
@@ -19,7 +19,7 @@ npm install --save eos-detective
 ## Quick Start
 
 ```js
-import * as detective from "../";
+import * as detective from "eos-detective";
 
 const token = "<API TOKEN>";
 const endpoint = "https://api.eosdetective.semiofficial.io/v0/";
