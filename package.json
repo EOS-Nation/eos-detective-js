@@ -20,11 +20,13 @@
   "devDependencies": {
     "dotenv": "*",
     "tslint": "5.x",
+    "tslint-config-prettier": "^1.17.0",
     "typedoc": "0.14.x",
     "typescript": "3.x"
   },
   "dependencies": {
     "axios": "0.18.x",
-    "eosjs": "^20.0.0-beta3"
+    "eosjs": "^20.0.0-beta3",
+    "node-fetch": "^2.3.0"
   }
 }

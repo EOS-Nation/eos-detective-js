@@ -1,10 +1,11 @@
-import * as path from "path";
-import * as detective from "../";
+import * as path from "path"
+import * as detective from "../src"
+import Axios from "axios"
 
 // Private Settings;
-require('dotenv').config(path.join(__dirname, "..", ".env"));
-const token = process.env.DETECTIVE_TOKEN;
-const endpoint = process.env.DETECTIVE_ENDPOINT;
+require("dotenv").config(path.join(__dirname, "..", ".env"))
+const token = process.env.DETECTIVE_TOKEN || ""
+const endpoint = process.env.DETECTIVE_ENDPOINT
 
 /* Debug axios calls */
 /*
@@ -17,7 +18,7 @@ Axios.interceptors.request.use(function(config) {
   return Promise.reject(error)
 })
 
-
+/*
 Axios.interceptors.response.use(function(config) {
   // Do something before request is sent
   console.log(config)
@@ -29,9 +30,10 @@ Axios.interceptors.response.use(function(config) {
 })
 */
 
-detective.config(token, {endpoint})
+detective.config(token, { endpoint })
 
-detective.profile("eosnatio")
+
+detective.profile("eosnationftw")
   .then(res => {
     console.log("onsuccess")
     console.log(res)
@@ -41,7 +43,26 @@ detective.profile("eosnatio")
     console.log(reason)
   })
 
-//detective.accounts("system").then((res) => console.log(res))
+detective.accounts("system")
+  .then(res => {
+    console.log("onsuccess")
+    console.log(res)
+  })
+  .catch(reason => {
+    console.log("onerror")
+    console.log(reason)
+  })
+
+
+detective.transfers(["eosnationftw"], { quantity_min: 10 })
+  .then(res => {
+    console.log("onsuccess")
+    console.log(res)
+  })
+  .catch(reason => {
+    console.log("onerror")
+    console.log(reason)
+  })
 
 /*
 detective.transfers(["eosnationftw"], {
