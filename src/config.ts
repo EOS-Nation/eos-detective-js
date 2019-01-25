@@ -23,6 +23,7 @@ class Settings {
         if (!this.private_key) throw new Error("[private_key] is required");
         return new JsSignatureProvider([this.private_key]);
     }
+
     public get rpc () {
         if (!this.endpoint_eosio) throw new Error("[endpoint_eosio] is required");
         return new JsonRpc(this.endpoint_eosio, { fetch });

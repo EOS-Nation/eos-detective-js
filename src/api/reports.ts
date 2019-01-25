@@ -44,7 +44,6 @@ function actionPost(account: string, score: number, metadata: string) {
     try {
         const json = JSON.parse(metadata);
         if (typeof json !== "object") throw new Error("[metadata] must be an object");
-
     } catch (e) {
         throw new Error("[metadata] is an invalid JSON")
     }

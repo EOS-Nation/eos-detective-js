@@ -3,8 +3,8 @@ import * as detective from "../";
 
 // Private Settings;
 require('dotenv').config(path.join(__dirname, "..", ".env"));
-const token = process.env.DETECTIVE_TOKEN;
-const endpoint = process.env.DETECTIVE_ENDPOINT;
+const token = process.env.DETECTIVE_TOKEN || "";
+const endpoint = process.env.DETECTIVE_ENDPOINT || "";
 
 // Configure Detective
 detective.config(token, {endpoint});
