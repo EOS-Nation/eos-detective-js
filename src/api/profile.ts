@@ -30,25 +30,40 @@ export async function profile(
   /**
    * Account to profile
    */
-  account: string
+  account: string,
+  /**
+   * Minimum proportion of a transfer to be included in profiling (as percentage between 0.001 and 0.9)
+   *
+   * @default 0.01
+   */
+  threshold?: number
 ): Promise<ApiResponse<Profile>> {
-  const queryParams: any = { account }
 
-  const res = await Axios.request<ApiResponse<Profile>>({
-    url: "/profile",
-    params: queryParams,
+  if (threshold === undefined) {
+    threshold = 0.01
+  }
 
-    transformResponse: (result: any) => {
+  const queryParams: any = { account, threshold }
 
-      const json = JSON.parse(result)
+  try {
+    const res = await Axios.request<ApiResponse<Profile>>({
+      url: "/profile",
+      params: queryParams,
 
-      if (json.error) {
-        return new ApiResponse<Profile>(undefined, { code: json.code, errorMessage: json.errorMessage })
+      transformResponse: (result: any) => {
+
+        const json = JSON.parse(result)
+
+        if (json.error) {
+          return new ApiResponse<Profile>(undefined, { code: json.code, errorMessage: json.errorMessage })
+        }
+
+        return new ApiResponse<Profile>(json.result)
       }
+    })
 
-      return new ApiResponse<Profile>(json.result)
-    }
-  })
-
-  return await res.data
+    return await res.data
+  } catch (err) {
+    throw err.response.data
+  }
 }

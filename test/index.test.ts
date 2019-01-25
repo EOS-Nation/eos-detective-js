@@ -28,11 +28,14 @@ const endpoint = "https://api.eosdetective.semiofficial.io/v0/"
 
 config(token, endpoint)
 
-profile("deniscarrie")
-  .then(res => console.log(res))
+profile("eosnatio")
+  .then(res => {
+    console.log("onsuccess")
+    console.log(res)
+  })
   .catch(reason => {
     console.log("onerror")
-    console.log(reason.response.data)
+    console.log(reason)
   })
 
 //accounts("system").then((res) => console.log(res))
