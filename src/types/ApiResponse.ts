@@ -1,7 +1,22 @@
 import { Account } from "./Account"
 import { Transfer } from "./Transfer"
 
-export class ApiResponse {
+export class ApiResponse<T> {
+
+  private readonly _data: T
+
+  constructor(data: T) {
+    this._data = data
+  }
+
+  get data(): T {
+    return this._data
+  }
+
+}
+
+export class TransfersData {
+
   private readonly _accounts: Account[]
   private readonly _transfers: Transfer[]
   private readonly _limited: boolean

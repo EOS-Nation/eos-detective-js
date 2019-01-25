@@ -1,21 +1,6 @@
+import { Profile } from "../types/Profile"
+import { ApiResponse } from "../types/ApiResponse"
 import Axios from "axios"
-
-export interface Category {
-  percentage: number
-  volume: number
-  count: number
-}
-
-export interface Profile {
-  account: string,
-  contract: string,
-  token: string,
-  total_tokens_received: number;
-  score: number;
-  categories: {
-      [category: string]: Category
-  }
-}
 
 /**
  * Profile
@@ -29,16 +14,16 @@ export async function profile(
    * Account to profile
    */
   account: string
-): Promise<Profile> {
+): Promise<ApiResponse<Profile>> {
   const queryParams: any = { account }
 
-  const res = await Axios.request<Profile>({
+  const res = await Axios.request<ApiResponse<Profile>>({
     url: "/profile",
     params: queryParams,
     transformResponse: (result: any) => {
-      const json = JSON.parse(result);
+      const json = JSON.parse(result)
 
-      return json.result;
+      return new ApiResponse(json.result)
     }
   })
 

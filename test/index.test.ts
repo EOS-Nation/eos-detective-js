@@ -1,6 +1,4 @@
-import { transfers, config } from "../src"
-import Axios from "axios"
-import { accounts } from "../src/api/accounts"
+import { transfers, config, profile } from "../src"
 
 /* Debug axios calls */
 /*
@@ -30,7 +28,9 @@ const endpoint = "https://api.eosdetective.semiofficial.io/v0/"
 
 config(token, endpoint)
 
-accounts("system").then((res) => console.log(res))
+profile("deniscarrier").then(res => console.log(res))
+
+//accounts("system").then((res) => console.log(res))
 
 /*
 transfers(["eosnationftw"], {

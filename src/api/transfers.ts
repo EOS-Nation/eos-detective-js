@@ -1,7 +1,7 @@
 import { Transfer } from "../types/Transfer"
 import { Account } from "../types/Account"
+import { ApiResponse, TransfersData } from "../types/ApiResponse"
 import Axios from "axios"
-import { ApiResponse } from "../types/ApiResponse"
 
 /**
  * Transfers
@@ -72,7 +72,7 @@ export async function transfers(
      */
     count_max?: number
   }
-): Promise<ApiResponse> {
+): Promise<ApiResponse<TransfersData>> {
   const queryParams: any = { accounts }
   const yesterday = new Date(Date.now())
   yesterday.setDate(yesterday.getDate() - 1)
@@ -86,14 +86,26 @@ export async function transfers(
   queryParams.time_min = options.time_min === undefined ? yesterday.toISOString() : options.time_min.toISOString()
 
   // optional params
-  if (options.quantity_max) { queryParams.quantity_max = Math.round(options.quantity_max * 10000) }
-  if (options.time_max) { queryParams.time_max = options.time_max.toISOString() }
-  if (options.accumulated_min) { queryParams.accumulated_min = Math.round(options.accumulated_min * 10000) }
-  if (options.accumulated_max) { queryParams.accumulated_max = Math.round(options.accumulated_max * 10000) }
-  if (options.count_min) { queryParams.count_min = options.count_min }
-  if (options.count_max) { queryParams.count_max = options.count_max }
+  if (options.quantity_max) {
+    queryParams.quantity_max = Math.round(options.quantity_max * 10000)
+  }
+  if (options.time_max) {
+    queryParams.time_max = options.time_max.toISOString()
+  }
+  if (options.accumulated_min) {
+    queryParams.accumulated_min = Math.round(options.accumulated_min * 10000)
+  }
+  if (options.accumulated_max) {
+    queryParams.accumulated_max = Math.round(options.accumulated_max * 10000)
+  }
+  if (options.count_min) {
+    queryParams.count_min = options.count_min
+  }
+  if (options.count_max) {
+    queryParams.count_max = options.count_max
+  }
 
-  const res = await Axios.request<ApiResponse>({
+  const res = await Axios.request<ApiResponse<TransfersData>>({
     url: "/transfers",
     params: queryParams,
     transformResponse: (data: any) => {
@@ -106,11 +118,15 @@ export async function transfers(
       const accountsData: Account[] = []
 
       transfersData.forEach((transfer) => {
-        if (!accountsData.some((account) => account.name === transfer.to.name)) { accountsData.push(transfer.to) }
-        if (!accountsData.some((account) => account.name === transfer.from.name)) { accountsData.push(transfer.from) }
+        if (!accountsData.some((account) => account.name === transfer.to.name)) {
+          accountsData.push(transfer.to)
+        }
+        if (!accountsData.some((account) => account.name === transfer.from.name)) {
+          accountsData.push(transfer.from)
+        }
       })
 
-      return new ApiResponse(accountsData, transfersData, jsonRes.limited)
+      return new ApiResponse<TransfersData>(new TransfersData(accountsData, transfersData, jsonRes.limited))
     }
   })
 
