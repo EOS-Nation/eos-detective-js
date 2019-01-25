@@ -75,3 +75,23 @@ const permission = "active";
 
 detective.config(token, {private_key, permission, actor})
 ```
+
+## Publish Reports
+
+Advanced configurations is **required** before attempting the following steps.
+
+Once a profile is retrieved, it can be published to the EOS Detective smart contract.
+
+```js
+// Get Profile
+detective.profile("eosnationftw").then(response => {
+    const profile = response.data;
+
+    // Post report on chain
+    if (profile) {
+        detective.reports.post(profile).then((trx_id) => {
+            console.log("posted report", trx_id);
+        });
+    }
+});
+```
