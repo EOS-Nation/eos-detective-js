@@ -1,7 +1,13 @@
+import * as path from "path";
 import * as detective from "../";
 
-const token = "L9MVfwaeoPxNFaMxDEf6hbbpxjEdR5nHTLK2c4f9iNnxcmYj";
-const endpoint = "https://api.eosdetective.semiofficial.io/v0/";
+// Private Settings;
+require('dotenv').config(path.join(__dirname, "..", ".env"));
+const token = process.env.DETECTIVE_TOKEN;
+const endpoint = process.env.DETECTIVE_ENDPOINT;
 
-detective.config(token, endpoint);
+// Configure Detective
+detective.config(token, {endpoint});
+
+// Get Accounts
 detective.accounts("system").then((res) => console.log(res));

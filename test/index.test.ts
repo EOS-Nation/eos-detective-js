@@ -1,4 +1,10 @@
-import { transfers, config, profile } from "../src"
+import * as path from "path";
+import * as detective from "../";
+
+// Private Settings;
+require('dotenv').config(path.join(__dirname, "..", ".env"));
+const token = process.env.DETECTIVE_TOKEN;
+const endpoint = process.env.DETECTIVE_ENDPOINT;
 
 /* Debug axios calls */
 /*
@@ -23,12 +29,9 @@ Axios.interceptors.response.use(function(config) {
 })
 */
 
-const token = "L9MVfwaeoPxNFaMxDEf6hbbpxjEdR5nHTLK2c4f9iNnxcmYj"
-const endpoint = "https://api.eosdetective.semiofficial.io/v0/"
+detective.config(token, {endpoint})
 
-config(token, endpoint)
-
-profile("eosnatio")
+detective.profile("eosnatio")
   .then(res => {
     console.log("onsuccess")
     console.log(res)
@@ -38,10 +41,10 @@ profile("eosnatio")
     console.log(reason)
   })
 
-//accounts("system").then((res) => console.log(res))
+//detective.accounts("system").then((res) => console.log(res))
 
 /*
-transfers(["eosnationftw"], {
+detective.transfers(["eosnationftw"], {
   // quantity_min: 1000,
   accumulated: false,
   quantity_max: 1,

@@ -1,5 +1,5 @@
 import { Account } from "./Account"
-import { preciseRound } from "../util"
+import { preciseRound } from "../utils"
 
 export class Transfer {
   private readonly _from: Account
