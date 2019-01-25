@@ -24,6 +24,7 @@
     "typescript": "3.x"
   },
   "dependencies": {
-    "axios": "0.18.x"
+    "axios": "0.18.x",
+    "eosjs": "^20.0.0-beta3"
   }
 }
