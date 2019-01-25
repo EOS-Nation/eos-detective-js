@@ -21,11 +21,10 @@ export async function accounts(
     url: "/data/accounts",
     params: queryParams,
     transformResponse: (result: any) => {
-      const jsonRes = JSON.parse(result)
-
+      const jsonRes = JSON.parse(result);
       const accountsData: Account[] = jsonRes.data._documents.map((value: any) => {
-        return Account.fromJson(value)
-      })
+        return Account.fromJson(value);
+      });
 
       return new ApiResponse(accountsData, [], false)
     }
