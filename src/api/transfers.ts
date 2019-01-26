@@ -2,6 +2,7 @@ import { Transfer } from "../types/Transfer"
 import { Account } from "../types/Account"
 import { ApiResponse, TransfersData } from "../types/ApiResponse"
 import Axios from "axios"
+import { Profile } from "../types/Profile"
 
 /**
  * Transfers
@@ -105,30 +106,40 @@ export async function transfers(
     queryParams.count_max = options.count_max
   }
 
-  const res = await Axios.request<ApiResponse<TransfersData>>({
-    url: "/transfers",
-    params: queryParams,
-    transformResponse: (data: any) => {
-      const jsonRes = JSON.parse(data)
+  try {
+    const res = await Axios.request<ApiResponse<TransfersData>>({
+      url: "/transfers",
+      params: queryParams,
+      transformResponse: (data: any) => {
 
-      const transfersData: Transfer[] = jsonRes.data._documents.map((value: any) => {
-        return Transfer.fromJson(value)
-      })
+        const json = JSON.parse(data)
 
-      const accountsData: Account[] = []
-
-      transfersData.forEach((transfer) => {
-        if (!accountsData.some((account) => account.name === transfer.to.name)) {
-          accountsData.push(transfer.to)
+        if (json.error) {
+          return new ApiResponse<TransfersData>(undefined, { code: json.code, errorMessage: json.errorMessage })
         }
-        if (!accountsData.some((account) => account.name === transfer.from.name)) {
-          accountsData.push(transfer.from)
-        }
-      })
 
-      return new ApiResponse<TransfersData>(new TransfersData(accountsData, transfersData, jsonRes.limited))
-    }
-  })
+        const transfersData: Transfer[] = json.data.map((value: any) => {
+          return Transfer.fromJson(value)
+        })
 
-  return await res.data
+        const accountsData: Account[] = []
+
+        transfersData.forEach((transfer) => {
+          if (!accountsData.some((account) => account.name === transfer.to.name)) {
+            accountsData.push(transfer.to)
+          }
+          if (!accountsData.some((account) => account.name === transfer.from.name)) {
+            accountsData.push(transfer.from)
+          }
+        })
+
+        return new ApiResponse<TransfersData>(new TransfersData(accountsData, transfersData, json.limited))
+
+      }
+    })
+    return await res.data
+
+  } catch (err) {
+    throw err.response.data
+  }
 }
