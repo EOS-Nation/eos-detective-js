@@ -63,17 +63,35 @@ detective.profile("eosnationftw").then((response) => console.log(response.data))
  */
 ```
 
+## Profile Score & Category Rating
+
+[Google Drive](https://docs.google.com/document/d/1h_bfAIld1lukqdbRGnCRijQZg-oEgvzHODlPDTWbNj8/edit#heading=h.jypgir76dpkx)
+
 ## Advance Configuration
 
 These configurations are required to push detective reports on-chain.
 
-```js
-const token = "<API TOKEN>";
-const private_key "<EOSIO PRIVATE KEY>";
-const actor = "<EOSIO ACCOUNT>";
-const permission = "active";
+Saving your configuraitons in a `.env` file will prevent your sensitive data from being exposed in your javascript source code.
 
-detective.config(token, {private_key, permission, actor})
+**.env**
+
+```env
+# EOS Detective API
+DETECTIVE_TOKEN="<API TOKEN>"
+DETECTIVE_ENDPOINT="https://api.eosdetective.semiofficial.io/v0/"
+DETECTIVE_CONTRACT="eosdetective"
+
+# Publish EOS Detective Reports
+ENDPOINT_EOSIO="https://jungle.eosn.io"
+PRIVATE_KEY="<EOSIO PRIVATE KEY>"
+ACTOR="<EOSIO ACCOUNT>"
+PERMISSION="active"
+```
+
+Load your `.env` filepath by using the `config()` method.
+
+```js
+detective.config(".env")
 ```
 
 ## Publish Reports

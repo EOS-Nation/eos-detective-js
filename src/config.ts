@@ -1,8 +1,10 @@
 import Axios from "axios"
+import * as fs from "fs";
+import * as path from "path";
 import { JsonRpc, Api } from "eosjs";
 import JsSignatureProvider from "eosjs/dist/eosjs-jssig";
 
-const fetch = require("node-fetch");
+const fetch = require("isomorphic-fetch");
 const { TextEncoder, TextDecoder } = require("util");
 
 /**
@@ -47,43 +49,61 @@ class Settings {
 
 export function config(token: string, options: {
     /**
+     * EOS Detective API Token
+     */
+    token?: string,
+    /**
      * EOS Detective API endpoint
      *
      * @default "https://api.eosdetective.semiofficial.io/v0/"
      */
-    endpoint?: string | undefined,
+    endpoint?: string,
     /**
      * EOSIO API endpoint
      *
      * @default "https://api.eosn.io"
      */
-    endpoint_eosio?: string | undefined,
+    endpoint_eosio?: string,
     /**
      * EOISO account name
      */
-    actor?: string | undefined,
+    actor?: string,
     /**
      * EOSIO account's permission
      *
      * @default "active"
      */
-    permission?: string | undefined,
+    permission?: string,
     /**
      * EOSIO Private Key for account
      */
-    private_key?: string | undefined,
+    private_key?: string,
     /**
      * EOS Detective Smart Contract
      *
      * @default "eosdetective"
      */
-    contract?: string | undefined,
+    contract?: string,
 } = {}) {
-    // Require params
     if (!token) throw new Error("[token] is required");
-    settings.token = token;
+
+    // Read environment variables if `token` = `.env`
+    if (token.includes(".env")) {
+        if (!fs.existsSync(token)) throw new Error("[token] .env filepath does not exist");
+        require('dotenv').config(path.join(__dirname, "..", ".env"));
+        settings.token = process.env.DETECTIVE_TOKEN || settings.token;
+        settings.contract = process.env.DETECTIVE_CONTRACT || settings.contract;
+        settings.endpoint = process.env.DETECTIVE_ENDPOINT || settings.endpoint;
+        settings.actor = process.env.ACTOR || settings.actor;
+        settings.private_key = process.env.PRIVATE_KEY || settings.private_key;
+        settings.permission = process.env.PERMISSION || settings.permission;
+        settings.endpoint_eosio = process.env.ENDPOINT_EOSIO || settings.endpoint_eosio;
+    } else {
+        settings.token = token;
+    }
 
     // Optional Detective params
+    settings.token = options.token || settings.token;
     settings.endpoint = options.endpoint || settings.endpoint;
     settings.contract = options.contract || settings.contract;
 
@@ -96,6 +116,8 @@ export function config(token: string, options: {
     // Set globals
     Axios.defaults.baseURL = settings.endpoint
     Axios.defaults.headers.common["X-Api-Key"] = settings.token
+
+    if (!settings.token) throw new Error("[settings.token] is required");
 }
 
 export const settings = new Settings();

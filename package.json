@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "axios": "0.18.x",
-    "eosjs": "^20.0.0-beta3"
+    "eosjs": "^20.0.0-beta3",
+    "isomorphic-fetch": "^2.2.1"
   }
 }
