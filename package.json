@@ -27,7 +27,8 @@
   "dependencies": {
     "dotenv": "*",
     "axios": "0.18.x",
-    "eosjs": "^20.0.0-beta3",
+    "isomorphic-fetch": "^2.2.1"
     "node-fetch": "^2.3.0"
+    "eosjs": "^20.0.0-beta3",
   }
 }
