@@ -72,7 +72,7 @@ export async function transfers(
      * Maximum transaction count of accumulated transfers.
      */
     count_max?: number
-  }
+  } = {}
 ): Promise<ApiResponse<TransfersData>> {
   const queryParams: any = { accounts }
   const yesterday = new Date(Date.now())
