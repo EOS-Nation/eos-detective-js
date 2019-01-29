@@ -39,8 +39,6 @@ import detective from "eos-detective";
 ## Quick Start
 
 ```js
-import * as detective from "eos-detective";
-
 const token = "<API TOKEN>";
 
 detective.config(token);
