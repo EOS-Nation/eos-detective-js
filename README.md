@@ -103,11 +103,21 @@ Once a profile is retrieved, it can be published to the EOS Detective smart cont
 detective.profile("eosnationftw").then(response => {
     const profile = response.data;
 
-    // Post report on chain
-    if (profile) {
+    // Post report on chain with scores greater than 70
+    if (profile && profile.score >= 70) {
         detective.reports.post(profile).then((trx_id) => {
             console.log("posted report", trx_id);
         });
     }
+})
+```
+
+## Remove Reports
+
+Use `.remove(<account>)` to remove an existing published report.
+
+```
+detective.reports.remove("eosnationftw").then((trx_id) => {
+    console.log("removed report", trx_id);
 });
 ```
