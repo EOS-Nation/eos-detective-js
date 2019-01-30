@@ -1,7 +1,16 @@
 export interface Category {
-    percentage: number
-    volume: number
-    count: number
+  /**
+   * Percentage of tokens an account has received in this category, compared to all received tokens.
+   */
+  percentage: number
+  /**
+   * Token volume an account has received in this category.
+   */
+  volume: number
+  /**
+   * Number of incoming transfers in this category.
+   */
+  count: number
 }
 
 export interface Profile {
@@ -32,6 +41,6 @@ export interface Profile {
    */
   type: string | null;
   categories: {
-      [category: string]: Category
+    [category: string]: Category
   }
 }

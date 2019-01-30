@@ -3,18 +3,15 @@ import { ApiResponse } from "../types/ApiResponse"
 import Axios from "axios"
 
 /**
- * Accounts
+ * Returns a list of accounts for the requested category.
+ *
+ * @param type Account category, for example `blacklist` or `genesis`.
  *
  * @example
  *
- * accounts("blacklist")
+ * `accounts("blacklist")`
  */
-export async function accounts(
-  /**
-   * Account type
-   */
-  type: string
-): Promise<ApiResponse<Account[]>> {
+export async function accounts(type: string): Promise<ApiResponse<Account[]>> {
   const queryParams: any = { type }
 
   try {

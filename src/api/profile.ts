@@ -5,12 +5,18 @@ import Axios from "axios"
 /**
  * Returns a profile of the given account name. The profile includes an overall score and the distribution of incoming tokens within different categories.
  *
+ * @param account EOS mainnet account name
+ * @param threshold Minimum proportion of a transfer to be included in profiling (as percentage between `0.001` and `0.9`). Default is `0.01`
+ *
  * @example
  *
- * const profile = await detective.profile("eosnationftw");
+ * Request a profile of the account `eosnationftw`:
+ *
+ * `const profile = await detective.profile("eosnationftw");`
  *
  * Response:
  *
+ * ```
  * {
  *   account: 'eosnationftw',
  *   contract: 'eosio.token',
@@ -25,19 +31,9 @@ import Axios from "axios"
  *     }
  *   }
  * }
+ * ```
  */
-export async function profile(
-  /**
-   * Account to profile
-   */
-  account: string,
-  /**
-   * Minimum proportion of a transfer to be included in profiling (as percentage between 0.001 and 0.9)
-   *
-   * @default 0.01
-   */
-  threshold?: number
-): Promise<ApiResponse<Profile>> {
+export async function profile(account: string, threshold?: number): Promise<ApiResponse<Profile>> {
 
   if (threshold === undefined) {
     threshold = 0.01

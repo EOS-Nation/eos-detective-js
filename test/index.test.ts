@@ -27,17 +27,7 @@ Axios.interceptors.response.use(function(config) {
 
 detective.config(path.join(__dirname, "..", ".env"))
 
-detective.profile("eosnationftw")
-  .then(res => {
-    console.log("onsuccess")
-    console.log(res)
-  })
-  .catch(reason => {
-    console.log("onerror")
-    console.log(reason)
-  })
-
-detective.accounts("system")
+detective.profile("yqjltendhyjp")
   .then(res => {
     console.log("onsuccess")
     console.log(res)
@@ -48,7 +38,8 @@ detective.accounts("system")
   })
 
 
-detective.transfers(["eosnationftw"], { quantity_min: 10 })
+
+detective.accounts("blacklist")
   .then(res => {
     console.log("onsuccess")
     console.log(res)
@@ -58,14 +49,13 @@ detective.transfers(["eosnationftw"], { quantity_min: 10 })
     console.log(reason)
   })
 
-/*
-detective.transfers(["eosnationftw"], {
-  // quantity_min: 1000,
-  accumulated: false,
-  quantity_max: 1,
-  time_min: new Date("2018-06-22T22:17:50.500Z")
-  // time_max: new Date("2018-06-28T22:18:43.000Z")
-  // time_max: new Date(Date.UTC(2018, 5, 28, 22, 18, 43))
-}).then((res) => {
-  console.log(res)
-})*/
+
+detective.transfers(["eosnationftw"], { quantity_min: 10, time_min: new Date('2016-01-24T22:07:43.990Z') })
+  .then(res => {
+    console.log("onsuccess")
+    console.log(res)
+  })
+  .catch(reason => {
+    console.log("onerror")
+    console.log(reason)
+  })

@@ -2,66 +2,79 @@ import { Transfer } from "../types/Transfer"
 import { Account } from "../types/Account"
 import { ApiResponse, TransfersData } from "../types/ApiResponse"
 import Axios from "axios"
-import { Profile } from "../types/Profile"
 
 /**
- * Transfers
+ * Endpoint to request and filter transfers.
  *
  * @example
  *
- * transfers(["bitfinexdep1"], {direction: "incoming", quantity_min: 10000})
+ * `transfers(["bitfinexdep1"], {direction: "incoming", quantity_min: 10000})`
  */
 export async function transfers(
   accounts: string[],
   options: {
     /**
-     * @default "eosio.token"
+     * EOS account on which the token contract has been deployed on.
+     *
+     * @default `eosio.token`
      */
     contract?: string
     /**
-     * @default "EOS"
+     * Token symbol.
+     *
+     * @default `EOS`
      */
     symbol?: string
     /**
-     * @default "both"
+     * Direction of transfers for the requested accounts.
+     *
+     * Can be:
+     *  * `incoming` - only transfers where the requested accounts are the receiver of the tokens.
+     *  * `outgoing` - only transfers where the requested accounts are the sender of the tokens.
+     *  * `both` - the requested accounts are either receiver or sender of the tokens.
+     *  * `between` - only transfers between the requested accounts are returned, other accounts are not considered.
+     *
+     * @default `both`
      */
     direction?: string
     /**
-     * @default true
+     * If set to `true` transfers between the same sender and receiver are accumulated, instead of returning all single transfers.
+     *
+     * @default `true`
      */
     accumulated?: boolean
     /**
      * Accounts to exclude from query.
      *
-     * @default "eosio.stake", "eosio.ram", "eosio.ramfee"
+     * @default `["eosio.stake", "eosio.ram", "eosio.ramfee"]`
      */
     excludes?: string[]
     /**
-     * Minimum token volume of each transfer.
+     * Minimum token volume of each transfer. If accumulated is set to `true`, only transfers above this threshold are included in the accumulation.
      *
-     * @default 0.1
+     * @default `0.1`
      */
     quantity_min?: number
     /**
-     * Maximum token volume of each transfer.
+     * Maximum token volume of each transfer. If accumulated is set to `true`, only transfers below this threshold are included in the accumulation.
      */
     quantity_max?: number
     /**
-     * Minimum time of each transfer.
+     * Minimum datetime of each transfer.
      *
-     * @default Yesterday
+     * @default `yesterday`
      */
     time_min?: Date
     /**
-     * Maximum time of each transfer.
+     * Maximum datetime of each transfer.
      */
     time_max?: Date
     /**
-     * Minimum token volume of accumulated transfers.
+     * Minimum accumulated token volume of transfers.
      */
     accumulated_min?: number
     /**
-     * Maximum token volume of accumulated transfers.
+     * Maximum accumulated token volume of transfers.
      */
     accumulated_max?: number
     /**
@@ -133,8 +146,11 @@ export async function transfers(
           }
         })
 
-        return new ApiResponse<TransfersData>(new TransfersData(accountsData, transfersData, json.limited))
-
+        return new ApiResponse<TransfersData>({
+          accounts: accountsData,
+          transfers: transfersData,
+          limited: json.limited
+        })
       }
     })
     return await res.data
