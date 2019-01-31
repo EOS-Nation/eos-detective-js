@@ -11,12 +11,15 @@ export function preciseRound(number: number, precision: number) {
 /**
  * Transaction
  */
-export async function transact(actions: any[]): Promise<string> {
+export async function transact(actions: any[], options: {
+  blocksBehind?: number,
+  expireSeconds?: number,
+} = {}): Promise<string> {
+  const blocksBehind = options.blocksBehind ? options.blocksBehind : 3
+  const expireSeconds = options.expireSeconds ? options.expireSeconds : 30
+
   try {
-    const result = await settings.api.transact({actions}, { blocksBehind: 3, expireSeconds: 30 });
-    for (const action of actions) {
-        console.log(`${action.account}::${action.name} [${JSON.stringify(action.data)}]`);
-    }
+    const result = await settings.api.transact({actions}, {blocksBehind, expireSeconds});
     return result.transaction_id;
   } catch (e) {
     if (e instanceof RpcError) throw new Error(JSON.stringify(e.json, null, 2));
