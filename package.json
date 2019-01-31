@@ -16,7 +16,7 @@
   "scripts": {
     "prepare": "tsc",
     "docs": "typedoc --out docs src",
-    "test": "ava -v && tslint --project ."
+    "test": "tsc && ava -v && tslint --project ."
   },
   "ava": {
     "compileEnhancements": false,

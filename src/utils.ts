@@ -47,6 +47,7 @@ export type Sym = string;
  */
 export function splitQuantity(quantity: string): [Amount, Sym] {
   if (!quantity) { throw new Error("[quantity] is required"); }
+  quantity = quantity.trim();
   const [amount, sym] = quantity.split(" ");
   if (!amount) { throw new Error("[amount] is invalid"); }
   if (!sym) { throw new Error("[sym] is invalid"); }

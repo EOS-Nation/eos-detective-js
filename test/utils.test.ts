@@ -9,4 +9,5 @@ test("utils.preciseRound", (t) => {
 test("utils.splitQuantity", (t) => {
     t.deepEqual(utils.splitQuantity("10.5000 EOS"), [10.5, "EOS"]);
     t.deepEqual(utils.splitQuantity("45.5000 BOS"), [45.5, "BOS"]);
+    t.deepEqual(utils.splitQuantity(" 45.5000 BOS "), [45.5, "BOS"]);
 });
