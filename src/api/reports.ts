@@ -1,6 +1,6 @@
 import { settings } from "../config";
 import { Profile } from "../types/Profile"
-import { transact } from "../utils";
+import { transact } from "../eosio";
 
 /**
  * Post Report

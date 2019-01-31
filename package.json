@@ -16,7 +16,8 @@
   "scripts": {
     "prepare": "tsc",
     "docs": "typedoc --out docs src",
-    "test": "tsc && ava -v && tslint --project ."
+    "test": "tsc && nyc ava -v",
+    "posttest": "tslint --project ."
   },
   "ava": {
     "compileEnhancements": false,
@@ -30,6 +31,7 @@
   "devDependencies": {
     "ava": "*",
     "husky": "*",
+    "nyc": "*",
     "ts-node": "*",
     "tslint": "*",
     "tslint-config-prettier": "1.x",
