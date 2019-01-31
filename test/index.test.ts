@@ -1,6 +1,11 @@
+import test from "ava";
 import * as path from "path"
 import * as detective from "../src"
 import Axios from "axios"
+
+test("api.profile", (t) => {
+  t.pass();
+});
 
 /* Debug axios calls */
 /*
@@ -25,37 +30,38 @@ Axios.interceptors.response.use(function(config) {
 })
 */
 
-detective.config(path.join(__dirname, "..", ".env"))
+// TO-DO add ava testing
+function main() {
+  detective.config(path.join(__dirname, "..", ".env"))
+  detective.profile("yqjltendhyjp")
+    .then(res => {
+      console.log("onsuccess")
+      console.log(res)
+    })
+    .catch(reason => {
+      console.log("onerror")
+      console.log(reason)
+    })
 
-detective.profile("yqjltendhyjp")
-  .then(res => {
-    console.log("onsuccess")
-    console.log(res)
-  })
-  .catch(reason => {
-    console.log("onerror")
-    console.log(reason)
-  })
+  detective.accounts("blacklist")
+    .then(res => {
+      console.log("onsuccess")
+      console.log(res)
+    })
+    .catch(reason => {
+      console.log("onerror")
+      console.log(reason)
+    })
 
+  detective.transfers(["eosnationftw"], { quantity_min: 10, time_min: new Date('2016-01-24T22:07:43.990Z') })
+    .then(res => {
+      console.log("onsuccess")
+      console.log(res)
+    })
+    .catch(reason => {
+      console.log("onerror")
+      console.log(reason)
+    })
+}
 
-
-detective.accounts("blacklist")
-  .then(res => {
-    console.log("onsuccess")
-    console.log(res)
-  })
-  .catch(reason => {
-    console.log("onerror")
-    console.log(reason)
-  })
-
-
-detective.transfers(["eosnationftw"], { quantity_min: 10, time_min: new Date('2016-01-24T22:07:43.990Z') })
-  .then(res => {
-    console.log("onsuccess")
-    console.log(res)
-  })
-  .catch(reason => {
-    console.log("onerror")
-    console.log(reason)
-  })
+// main()

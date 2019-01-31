@@ -10,7 +10,8 @@
     "no-console": false,
     "only-arrow-functions": false,
     "no-bitwise": false,
-    "member-ordering": false
+    "member-ordering": false,
+    "no-var-requires": false
   },
   "rulesDirectory": []
 }

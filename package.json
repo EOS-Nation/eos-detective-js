@@ -15,11 +15,23 @@
   "license": "MIT",
   "scripts": {
     "prepare": "tsc",
-    "docs": "typedoc --out docs src"
+    "docs": "typedoc --out docs src",
+    "test": "ava -v && tslint --project ."
+  },
+  "ava": {
+    "compileEnhancements": false,
+    "extensions": [
+      "ts"
+    ],
+    "require": [
+      "ts-node/register"
+    ]
   },
   "devDependencies": {
+    "ava": "*",
     "husky": "*",
-    "tslint": "5.x",
+    "ts-node": "*",
+    "tslint": "*",
     "tslint-config-prettier": "1.x",
     "typedoc": "0.14.x",
     "typescript": "3.x"

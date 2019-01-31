@@ -22,12 +22,12 @@ class Settings {
     public contract = "eosdetective";
 
     public get signatureProvider () {
-        if (!this.private_key) throw new Error("[private_key] is required");
+        if (!this.private_key) { throw new Error("[private_key] is required"); }
         return new JsSignatureProvider([this.private_key]);
     }
 
     public get rpc () {
-        if (!this.endpoint_eosio) throw new Error("[endpoint_eosio] is required");
+        if (!this.endpoint_eosio) { throw new Error("[endpoint_eosio] is required"); }
         return new JsonRpc(this.endpoint_eosio, { fetch });
     }
 
@@ -38,8 +38,8 @@ class Settings {
     }
 
     public get authorization () {
-        if (!this.actor) throw new Error("[actor] is required");
-        if (!this.permission) throw new Error("[permission] is required");
+        if (!this.actor) { throw new Error("[actor] is required"); }
+        if (!this.permission) { throw new Error("[permission] is required"); }
         return [{
             actor: this.actor,
             permission: this.permission
@@ -85,11 +85,11 @@ export function config(token: string, options: {
      */
     contract?: string,
 } = {}) {
-    if (!token) throw new Error("[token] is required");
+    if (!token) { throw new Error("[token] is required"); }
 
     // Read environment variables if `token` = `.env`
     if (token.includes(".env")) {
-        if (!fs.existsSync(token)) throw new Error("[token] .env filepath does not exist");
+        if (!fs.existsSync(token)) { throw new Error("[token] .env filepath does not exist"); }
         require('dotenv').config(path.join(__dirname, "..", ".env"));
         settings.token = process.env.DETECTIVE_TOKEN || settings.token;
         settings.contract = process.env.DETECTIVE_CONTRACT || settings.contract;
@@ -117,7 +117,7 @@ export function config(token: string, options: {
     Axios.defaults.baseURL = settings.endpoint
     Axios.defaults.headers.common["X-Api-Key"] = settings.token
 
-    if (!settings.token) throw new Error("[settings.token] is required");
+    if (!settings.token) { throw new Error("[settings.token] is required"); }
 }
 
 export const settings = new Settings();
