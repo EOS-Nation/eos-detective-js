@@ -1,11 +1,5 @@
-import test from "ava";
 import * as path from "path"
 import * as detective from "../src"
-import Axios from "axios"
-
-test("api.profile", (t) => {
-  t.pass();
-});
 
 /* Debug axios calls */
 /*
