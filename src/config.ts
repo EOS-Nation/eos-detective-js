@@ -18,8 +18,8 @@ class Settings {
     public endpoint = "https://api.eosdetective.semiofficial.io/v0/";
     public endpoint_eosio = "https://api.eosn.io";
     public actor = "";
-    public permission = "active";
-    public contract = "eosdetective";
+    public permission = "";
+    public contract = "";
 
     public get signatureProvider () {
         if (!this.private_key) { throw new Error("[private_key] is required"); }
@@ -90,7 +90,7 @@ export function config(token: string, options: {
     // Read environment variables if `token` = `.env`
     if (token.includes(".env")) {
         if (!fs.existsSync(token)) { throw new Error("[token] .env filepath does not exist"); }
-        require('dotenv').config(path.join(__dirname, "..", ".env"));
+        require('dotenv').config(token);
         settings.token = process.env.DETECTIVE_TOKEN || settings.token;
         settings.contract = process.env.DETECTIVE_CONTRACT || settings.contract;
         settings.endpoint = process.env.DETECTIVE_ENDPOINT || settings.endpoint;

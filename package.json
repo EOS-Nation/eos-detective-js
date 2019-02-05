@@ -20,11 +20,11 @@
     "posttest": "tslint --project ."
   },
   "devDependencies": {
-    "@types/jest": "^23.3.13",
+    "@types/jest": "*",
     "husky": "*",
-    "jest": "^24.0.0",
+    "jest": "*",
     "nyc": "*",
-    "ts-jest": "^23.10.5",
+    "ts-jest": "*",
     "ts-node": "*",
     "tslint": "*",
     "tslint-config-prettier": "1.x",

@@ -1,6 +1,44 @@
 import { settings } from "../config";
 import { Profile } from "../types/Profile"
 import { transact } from "../eosio";
+import { RpcError } from "eosjs";
+
+export interface GetTableRows<T = Account> {
+    rows: T[];
+    more: boolean;
+}
+
+export interface Account {
+    account: string;
+    score: number;
+    metadata: string;
+    timestamp: string;
+}
+
+/**
+ * Get Report
+ *
+ * @example
+ *
+ * detective.reports.get("eosnationftw").then(data => {
+ *   console.log(data)
+ * })
+ */
+export async function get(account: string) {
+    if (!account) { throw new Error("[account] is required"); }
+    if (!settings.contract) { throw new Error("[settings.contract] is required"); }
+
+    const code = settings.contract;
+    const scope = settings.contract;
+    const table = "accounts";
+    const lower_bound = account;
+    const upper_bound = account;
+    const json = true;
+
+    const rows: GetTableRows<Account> = await settings.rpc.get_table_rows({code, scope, table, lower_bound, upper_bound, json});
+    if (!rows.rows.length) { throw new Error(`[account::${account}] does not exist`) }
+    return rows.rows[0];
+}
 
 /**
  * Post Report
