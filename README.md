@@ -116,8 +116,18 @@ detective.profile("eosnationftw").then(response => {
 
 Use `.remove(<account>)` to remove an existing published report.
 
-```
+```js
 detective.reports.remove("eosnationftw").then((trx_id) => {
     console.log("removed report", trx_id);
 });
+```
+
+## Get Report
+
+Fetches a single the report of a single account from the contract table data.
+
+```js
+detective.reports.get("altcoinomysa").then(data => {
+    console.log(data)
+})
 ```
