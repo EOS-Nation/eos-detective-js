@@ -27,7 +27,7 @@ Axios.interceptors.response.use(function(config) {
 
 detective.config(path.join(__dirname, "..", ".env"))
 
-detective.profile("yqjltendhyjp")
+detective.stats()
   .then(res => {
     console.log("onsuccess")
     console.log(res)
@@ -37,6 +37,16 @@ detective.profile("yqjltendhyjp")
     console.log(reason)
   })
 
+/*
+detective.profile("yqjltendhyjp")
+  .then(res => {
+    console.log("onsuccess")
+    console.log(res)
+  })
+  .catch(reason => {
+    console.log("onerror")
+    console.log(reason)
+  })
 
 
 detective.accounts("blacklist")
@@ -50,7 +60,7 @@ detective.accounts("blacklist")
   })
 
 
-detective.transfers(["eosnationftw"], { quantity_min: 10, time_min: new Date('2016-01-24T22:07:43.990Z') })
+detective.transfers(["eosnationftw"], { quantity_min: 10, time_min: new Date("2016-01-24T22:07:43.990Z") })
   .then(res => {
     console.log("onsuccess")
     console.log(res)
@@ -59,3 +69,4 @@ detective.transfers(["eosnationftw"], { quantity_min: 10, time_min: new Date('20
     console.log("onerror")
     console.log(reason)
   })
+*/
