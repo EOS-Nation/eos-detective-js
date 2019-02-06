@@ -1,6 +1,7 @@
 # dotenv environment variables file
 *.env
 !.env.example
+yarn.lock
 
 .idea
 .directory

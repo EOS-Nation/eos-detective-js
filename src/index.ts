@@ -11,3 +11,5 @@ export * from "./config"
 // Scoped
 import * as reports from "./api/reports";
 export { reports };
+import * as utils from "./utils";
+export { utils };

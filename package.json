@@ -1,6 +1,6 @@
 {
   "name": "eos-detective",
-  "version": "0.2.1",
+  "version": "0.4.0",
   "description": "EOS Detective",
   "main": "dist/index.js",
   "types": "dist/index.d.js",
@@ -15,11 +15,18 @@
   "license": "MIT",
   "scripts": {
     "prepare": "tsc",
-    "docs": "typedoc --out docs src"
+    "docs": "typedoc --out docs src",
+    "test": "jest --coverage",
+    "posttest": "tslint --project ."
   },
   "devDependencies": {
+    "@types/jest": "*",
     "husky": "*",
-    "tslint": "5.x",
+    "jest": "*",
+    "nyc": "*",
+    "ts-jest": "*",
+    "ts-node": "*",
+    "tslint": "*",
     "tslint-config-prettier": "1.x",
     "typedoc": "0.14.x",
     "typescript": "3.x"
