@@ -6,32 +6,38 @@ export class Transfer {
   private readonly _to: Account
   private readonly _quantity: number
   private readonly _symbol: string
+  private readonly _chain: string
   private readonly _contract: string
   private readonly _time?: Date
   private readonly _blockNum?: number
   private readonly _count?: number
   private readonly _trxId?: string
+  private readonly _memo?: string
 
   public constructor(
     from: string,
     to: string,
     quantity: number,
     symbol: string,
+    chain: string,
     contract: string,
     time?: Date,
     blockNum?: number,
     count?: number,
-    trxId?: string
+    trxId?: string,
+    memo?: string
   ) {
     this._from = new Account(from)
     this._to = new Account(to)
     this._quantity = preciseRound(quantity / 10000, 4)
     this._symbol = symbol
+    this._chain = chain
     this._contract = contract
     this._time = time
     this._blockNum = blockNum
     this._count = count
     this._trxId = trxId
+    this._memo = memo
   }
 
   public static fromJson(value: any): Transfer {
@@ -40,11 +46,13 @@ export class Transfer {
       value.to,
       value.quantity,
       value.symbol,
+      value.chain,
       value.contract,
       value.time === undefined ? undefined : new Date(value.time),
       value!.block_num,
       value!.count,
-      value!.trx_id
+      value!.trx_id,
+      value!.memo
     )
   }
 
@@ -58,11 +66,13 @@ export class Transfer {
       to: this._to,
       quantity: this._quantity,
       symbol: this._symbol,
+      chain: this._chain,
       contract: this._contract,
       time: this._time,
       block_num: this._blockNum,
       count: this._count,
-      trx_id: this._trxId
+      trx_id: this._trxId,
+      memo: this._memo
     }
   }
 
@@ -102,6 +112,13 @@ export class Transfer {
   }
 
   /**
+   * @returns the chain.
+   */
+  get chain(): string {
+    return this._chain
+  }
+
+  /**
    * @returns the token contract.
    */
   get contract(): string {
@@ -134,5 +151,12 @@ export class Transfer {
    */
   get trxId(): string | undefined {
     return this._trxId
+  }
+
+  /**
+   * @returns the memo.
+   */
+  get memo(): string | undefined {
+    return this._memo
   }
 }

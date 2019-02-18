@@ -5,4 +5,4 @@ import * as detective from "../dist";
 detective.config(path.join(__dirname, "..", ".env"));
 
 // Get Tranfers
-detective.transfers(["eosnationftw"]).then((response) => console.log(response.data));
+detective.transfers(["eosnationftw"],{accumulated: false}).then((response) => console.log(response.data));
