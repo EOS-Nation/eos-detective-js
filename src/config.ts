@@ -1,11 +1,10 @@
 import Axios from "axios"
 import * as fs from "fs";
-import * as path from "path";
-import { JsonRpc, Api } from "eosjs";
+import {JsonRpc, Api} from "eosjs";
 import JsSignatureProvider from "eosjs/dist/eosjs-jssig";
 
 const fetch = require("isomorphic-fetch");
-const { TextEncoder, TextDecoder } = require("util");
+const {TextEncoder, TextDecoder} = require("util");
 
 /**
  * Settings
@@ -21,25 +20,33 @@ class Settings {
     public permission = "";
     public contract = "";
 
-    public get signatureProvider () {
-        if (!this.private_key) { throw new Error("[private_key] is required"); }
+    public get signatureProvider() {
+        if (!this.private_key) {
+            throw new Error("[private_key] is required");
+        }
         return new JsSignatureProvider([this.private_key]);
     }
 
-    public get rpc () {
-        if (!this.endpoint_eosio) { throw new Error("[endpoint_eosio] is required"); }
-        return new JsonRpc(this.endpoint_eosio, { fetch });
+    public get rpc() {
+        if (!this.endpoint_eosio) {
+            throw new Error("[endpoint_eosio] is required");
+        }
+        return new JsonRpc(this.endpoint_eosio, {fetch});
     }
 
-    public get api () {
+    public get api() {
         const rpc = this.rpc;
         const signatureProvider = this.signatureProvider;
-        return new Api({ rpc, signatureProvider, textDecoder: new TextDecoder(), textEncoder: new TextEncoder() });
+        return new Api({rpc, signatureProvider, textDecoder: new TextDecoder(), textEncoder: new TextEncoder()});
     }
 
-    public get authorization () {
-        if (!this.actor) { throw new Error("[actor] is required"); }
-        if (!this.permission) { throw new Error("[permission] is required"); }
+    public get authorization() {
+        if (!this.actor) {
+            throw new Error("[actor] is required");
+        }
+        if (!this.permission) {
+            throw new Error("[permission] is required");
+        }
         return [{
             actor: this.actor,
             permission: this.permission
@@ -85,11 +92,15 @@ export function config(token: string, options: {
      */
     contract?: string,
 } = {}) {
-    if (!token) { throw new Error("[token] is required"); }
+    if (!token) {
+        throw new Error("[token] is required");
+    }
 
     // Read environment variables if `token` = `.env`
     if (token.includes(".env")) {
-        if (!fs.existsSync(token)) { throw new Error("[token] .env filepath does not exist"); }
+        if (!fs.existsSync(token)) {
+            throw new Error("[token] .env filepath does not exist");
+        }
         require('dotenv').config(token);
         settings.token = process.env.DETECTIVE_TOKEN || settings.token;
         settings.contract = process.env.DETECTIVE_CONTRACT || settings.contract;
@@ -114,10 +125,13 @@ export function config(token: string, options: {
     settings.permission = options.permission || settings.permission;
 
     // Set globals
-    Axios.defaults.baseURL = settings.endpoint
-    Axios.defaults.headers.common["X-Api-Key"] = settings.token
+    Axios.defaults.baseURL = settings.endpoint;
+    Axios.defaults.headers.common["X-Api-Key"] = settings.token;
+    Axios.defaults.headers.common.Authorization = `Bearer ${settings.token}`;
 
-    if (!settings.token) { throw new Error("[settings.token] is required"); }
+    if (!settings.token) {
+        throw new Error("[settings.token] is required");
+    }
 }
 
 export const settings = new Settings();
