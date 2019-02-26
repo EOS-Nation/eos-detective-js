@@ -4,6 +4,6 @@ import * as detective from "..";
 // Configure Detective
 detective.config(path.join(__dirname, "..", ".env"));
 
-// Get Report
-detective.reports.get("altcoinomysa")
-    .then(data => console.log(data))
+detective.profile("eosnationftw")
+    .then((response) => console.log(response.data))
+    .catch((err) => console.log(err));
