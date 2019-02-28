@@ -1,27 +1,41 @@
-import { ApiResponse } from "../types/ApiResponse"
+import {ApiResponse} from "../types/ApiResponse"
 import Axios from "axios"
-import { Stats } from "../types/Stats"
+import {Stats} from "../types/Stats"
 
 /**
  * Returns some stats of the current state of database.
  */
-export async function stats(): Promise<ApiResponse<Stats[]>> {
-  try {
-    const res = await Axios.request<ApiResponse<Stats[]>>({
-      url: "/stats",
-      transformResponse: (result: any) => {
-        const json = JSON.parse(result)
+export async function stats(
+    options: {
+        /**
+         * Chain. Current available values are `EOS` and `BOS`.
+         *
+         * @default `EOS`
+         */
+        chain?: string
+    } = {}
+): Promise<ApiResponse<Stats[]>> {
 
-        if (json.error) {
-          return new ApiResponse<Stats[]>(undefined, { code: json.code, errorMessage: json.errorMessage })
-        }
+    const queryParams: any = {};
+    queryParams.chain = options.chain || "EOS";
 
-        return new ApiResponse(json.result)
-      }
-    })
+    try {
+        const res = await Axios.request<ApiResponse<Stats[]>>({
+            url: "/stats",
+            params: queryParams,
+            transformResponse: (result: any) => {
+                const json = JSON.parse(result);
 
-    return await res.data
-  } catch (err) {
-    throw err.response.data
-  }
+                if (json.error) {
+                    return new ApiResponse<Stats[]>(undefined, {code: json.code, errorMessage: json.errorMessage})
+                }
+
+                return new ApiResponse(json.result)
+            }
+        });
+
+        return await res.data
+    } catch (err) {
+        throw err.response.data
+    }
 }
