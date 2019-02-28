@@ -5,4 +5,4 @@ import * as detective from "../";
 detective.config(path.join(__dirname, "..", ".env"));
 
 // Get Profile
-detective.profile("eosnationftw").then((response) => console.log(response.data));
+detective.profile("eosnationft").then((response) => console.log(response.data)).catch((err) => console.error(err));

@@ -5,4 +5,4 @@ import * as detective from "../";
 detective.config(path.join(__dirname, "..", ".env"));
 
 // Get Accounts
-detective.accounts("system").then((res) => console.log(res));
+detective.accounts("system").then((res) => console.log(res)).catch((err) => console.error(err));
