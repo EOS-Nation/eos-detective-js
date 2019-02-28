@@ -1,5 +1,5 @@
 import * as path from "path"
-import * as detective from "../src"
+import * as detective from ".."
 import Axios from "axios"
 
 /* Debug axios calls */

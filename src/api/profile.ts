@@ -57,7 +57,6 @@ export async function profile(account: string, threshold?: number): Promise<ApiR
         return new ApiResponse<Profile>(json.result)
       }
     })
-
     return await res.data
   } catch (err) {
     throw err.response.data
