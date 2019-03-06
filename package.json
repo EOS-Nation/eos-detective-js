@@ -14,7 +14,7 @@
   },
   "license": "MIT",
   "scripts": {
-    "prepublishOnly": "tsc",
+    "prepare": "tsc",
     "docs": "typedoc --out docs src",
     "test": "jest --coverage",
     "posttest": "tslint --project ."
