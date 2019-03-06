@@ -6,4 +6,5 @@ detective.config(path.join(__dirname, "..", ".env"));
 
 // Get Accounts
 detective.accounts("system")
-    .then((data) => console.log(data));
+    .then((res) => console.log(res))
+    .catch((err) => console.error(err));
