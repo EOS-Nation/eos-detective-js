@@ -1,8 +1,8 @@
 import Axios from "axios"
 import * as fs from "fs";
 import {JsonRpc, Api} from "eosjs";
+import JsSignatureProvider from "eosjs/dist/eosjs-jssig";
 
-const JsSignatureProvider = require("eosjs/dist/eosjs-jssig").default;
 const fetch = require("isomorphic-fetch");
 const {TextEncoder, TextDecoder} = require("util");
 
