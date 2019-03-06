@@ -1,6 +1,6 @@
 {
   "name": "eos-detective",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "description": "EOS Detective",
   "main": "dist/index.js",
   "types": "dist/index.d.js",
@@ -14,7 +14,7 @@
   },
   "license": "MIT",
   "scripts": {
-    "prepare": "tsc",
+    "prepublishOnly": "tsc",
     "docs": "typedoc --out docs src",
     "test": "jest --coverage",
     "posttest": "tslint --project ."
