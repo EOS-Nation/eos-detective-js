@@ -1,6 +1,6 @@
 {
   "name": "eos-detective",
-  "version": "0.5.3",
+  "version": "0.5.4",
   "description": "EOS Detective",
   "main": "dist/index.js",
   "types": "dist/index.d.js",
@@ -28,13 +28,13 @@
     "ts-node": "*",
     "tslint": "*",
     "tslint-config-prettier": "1.x",
-    "typedoc": "0.14.x",
-    "typescript": "3.x"
+    "typedoc": "*",
+    "typescript": "*"
   },
   "dependencies": {
     "axios": "0.18.x",
     "dotenv": "*",
-    "eosjs": "^20.0.0-beta3",
+    "eosjs": "20.0.0-beta3",
     "isomorphic-fetch": "2.x"
   }
 }
