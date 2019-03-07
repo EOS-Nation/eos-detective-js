@@ -107,24 +107,12 @@ export async function transfers(
     queryParams.time_min = options.time_min === undefined ? yesterday.toISOString() : options.time_min.toISOString()
 
     // optional params
-    if (options.quantity_max) {
-        queryParams.quantity_max = Math.round(options.quantity_max * 10000)
-    }
-    if (options.time_max) {
-        queryParams.time_max = options.time_max.toISOString()
-    }
-    if (options.accumulated_min) {
-        queryParams.accumulated_min = Math.round(options.accumulated_min * 10000)
-    }
-    if (options.accumulated_max) {
-        queryParams.accumulated_max = Math.round(options.accumulated_max * 10000)
-    }
-    if (options.count_min) {
-        queryParams.count_min = options.count_min
-    }
-    if (options.count_max) {
-        queryParams.count_max = options.count_max
-    }
+    if (options.quantity_max) { queryParams.quantity_max = Math.round(options.quantity_max * 10000); }
+    if (options.time_max) { queryParams.time_max = options.time_max.toISOString(); }
+    if (options.accumulated_min) { queryParams.accumulated_min = Math.round(options.accumulated_min * 10000); }
+    if (options.accumulated_max) { queryParams.accumulated_max = Math.round(options.accumulated_max * 10000); }
+    if (options.count_min) { queryParams.count_min = options.count_min; }
+    if (options.count_max) { queryParams.count_max = options.count_max; }
 
     try {
         const res = await Axios.request<ApiResponse<TransfersData>>({
