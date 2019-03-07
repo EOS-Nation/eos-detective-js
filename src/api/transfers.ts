@@ -90,7 +90,19 @@ export async function transfers(
         /**
          * Maximum transaction count of accumulated transfers.
          */
-        count_max?: number
+        count_max?: number,
+        /**
+         * Result offset.
+         *
+         * @default 0
+         */
+        offset?: number,
+        /**
+         * Result limit.
+         *
+         * @default 1000
+         */
+        limit?: number
     } = {}
 ): Promise<ApiResponse<TransfersData>> {
     const queryParams: any = {accounts};
@@ -99,20 +111,34 @@ export async function transfers(
 
     // default params
     queryParams.symbol = options.symbol || "EOS"
-    queryParams.chain = options.chain || "EOS"
+    queryParams.chain = options.chain || "eos"
     queryParams.direction = options.direction || "both"
     queryParams.accumulated = options.accumulated === undefined ? true : options.accumulated
     queryParams.excludes = options.excludes || []
     queryParams.quantity_min = options.quantity_min === undefined ? 1000 : Math.round(options.quantity_min * 10000)
     queryParams.time_min = options.time_min === undefined ? yesterday.toISOString() : options.time_min.toISOString()
+    queryParams.offset = options.offset || 0;
+    queryParams.limit = options.limit || 1000;
 
     // optional params
-    if (options.quantity_max) { queryParams.quantity_max = Math.round(options.quantity_max * 10000); }
-    if (options.time_max) { queryParams.time_max = options.time_max.toISOString(); }
-    if (options.accumulated_min) { queryParams.accumulated_min = Math.round(options.accumulated_min * 10000); }
-    if (options.accumulated_max) { queryParams.accumulated_max = Math.round(options.accumulated_max * 10000); }
-    if (options.count_min) { queryParams.count_min = options.count_min; }
-    if (options.count_max) { queryParams.count_max = options.count_max; }
+    if (options.quantity_max) {
+        queryParams.quantity_max = Math.round(options.quantity_max * 10000);
+    }
+    if (options.time_max) {
+        queryParams.time_max = options.time_max.toISOString();
+    }
+    if (options.accumulated_min) {
+        queryParams.accumulated_min = Math.round(options.accumulated_min * 10000);
+    }
+    if (options.accumulated_max) {
+        queryParams.accumulated_max = Math.round(options.accumulated_max * 10000);
+    }
+    if (options.count_min) {
+        queryParams.count_min = options.count_min;
+    }
+    if (options.count_max) {
+        queryParams.count_max = options.count_max;
+    }
 
     try {
         const res = await Axios.request<ApiResponse<TransfersData>>({
