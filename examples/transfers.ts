@@ -5,6 +5,9 @@ import * as detective from "..";
 detective.config(path.join(__dirname, "..", ".env"));
 
 // Get Tranfers
-detective.transfers(["eosnationftw"], {accumulated: false, limit: 10, offset: 10})
-    .then((response) => console.log(response.data))
+detective.transfers(["eosnationftw"], {direction: 'incoming', accumulated: true, quantity_min: 400})
+    .then((response) => {
+        //console.log(response)
+        console.log(response.data!.transfers);
+    })
     .catch((err) => console.error(err));

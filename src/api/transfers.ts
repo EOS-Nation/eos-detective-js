@@ -110,28 +110,28 @@ export async function transfers(
     yesterday.setMonth(yesterday.getMonth() - 3);
 
     // default params
-    queryParams.symbol = options.symbol || "EOS"
-    queryParams.chain = options.chain || "eos"
-    queryParams.direction = options.direction || "both"
-    queryParams.accumulated = options.accumulated === undefined ? true : options.accumulated
-    queryParams.excludes = options.excludes || []
-    queryParams.quantity_min = options.quantity_min === undefined ? 1000 : Math.round(options.quantity_min * 10000)
-    queryParams.time_min = options.time_min === undefined ? yesterday.toISOString() : options.time_min.toISOString()
+    queryParams.symbol = options.symbol || "EOS";
+    queryParams.chain = options.chain || "eos";
+    queryParams.direction = options.direction || "both";
+    queryParams.accumulated = options.accumulated === undefined ? true : options.accumulated;
+    queryParams.excludes = options.excludes || [];
+    queryParams.quantity_min = options.quantity_min === undefined ? 0.1 : options.quantity_min;
+    queryParams.time_min = options.time_min === undefined ? yesterday.toISOString() : options.time_min.toISOString();
     queryParams.offset = options.offset || 0;
     queryParams.limit = options.limit || 1000;
 
     // optional params
     if (options.quantity_max) {
-        queryParams.quantity_max = Math.round(options.quantity_max * 10000);
+        queryParams.quantity_max = options.quantity_max;
     }
     if (options.time_max) {
         queryParams.time_max = options.time_max.toISOString();
     }
     if (options.accumulated_min) {
-        queryParams.accumulated_min = Math.round(options.accumulated_min * 10000);
+        queryParams.accumulated_min = options.accumulated_min;
     }
     if (options.accumulated_max) {
-        queryParams.accumulated_max = Math.round(options.accumulated_max * 10000);
+        queryParams.accumulated_max = options.accumulated_max;
     }
     if (options.count_min) {
         queryParams.count_min = options.count_min;
@@ -146,36 +146,38 @@ export async function transfers(
             params: queryParams,
             transformResponse: (data: any) => {
 
-                const json = JSON.parse(data)
+                const json = JSON.parse(data);
 
                 if (json.error) {
-                    return new ApiResponse<TransfersData>(undefined, {code: json.code, errorMessage: json.errorMessage})
+                    return new ApiResponse<TransfersData>(undefined, {
+                        code: json.code,
+                        errorMessage: json.errorMessage
+                    });
                 }
 
-                const transfersData: Transfer[] = json.data.map((value: any) => {
+                const transfersData: Transfer[] = json.result.map((value: any) => {
                     return Transfer.fromJson(value)
-                })
+                });
 
-                const accountsData: Account[] = []
+                const accountsData: Account[] = [];
 
                 transfersData.forEach((transfer) => {
                     if (!accountsData.some((account) => account.name === transfer.to.name)) {
-                        accountsData.push(transfer.to)
+                        accountsData.push(transfer.to);
                     }
                     if (!accountsData.some((account) => account.name === transfer.from.name)) {
-                        accountsData.push(transfer.from)
+                        accountsData.push(transfer.from);
                     }
-                })
+                });
 
                 return new ApiResponse<TransfersData>({
                     accounts: accountsData,
                     transfers: transfersData,
                     limited: json.limited
-                })
+                });
             }
-        })
+        });
         return await res.data
-
     } catch (err) {
         throw err.response.data
     }
