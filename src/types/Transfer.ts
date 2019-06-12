@@ -1,6 +1,8 @@
 import { Account } from "./Account"
 import { preciseRound } from "../utils"
 
+export type Direction = "incoming" |"outgoing" | "both" | "between";
+
 export class Transfer {
   private readonly _from: Account
   private readonly _to: Account

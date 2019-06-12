@@ -1,4 +1,4 @@
-import {Transfer} from "../types/Transfer"
+import {Transfer, Direction} from "../types/Transfer"
 import {Account} from "../types/Account"
 import {ApiResponse, TransfersData} from "../types/ApiResponse"
 import Axios from "axios"
@@ -42,7 +42,7 @@ export async function transfers(
          *
          * @default `both`
          */
-        direction?: string
+        direction?: Direction
         /**
          * If set to `true` transfers between the same sender and receiver are accumulated, instead of returning all single transfers.
          *
