@@ -76,7 +76,7 @@ Saving your configuraitons in a `.env` file will prevent your sensitive data fro
 ```env
 # EOS Detective API
 DETECTIVE_TOKEN="<API TOKEN>"
-DETECTIVE_ENDPOINT="https://api.eosdetective.semiofficial.io/v0/"
+DETECTIVE_ENDPOINT="https://graph-api.eosdetective.io/v0/"
 DETECTIVE_CONTRACT="eosdetective"
 
 # Publish EOS Detective Reports

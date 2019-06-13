@@ -14,7 +14,7 @@ const {TextEncoder, TextDecoder} = require("util");
 class Settings {
     public token: string = "";
     public private_key: string = "";
-    public endpoint = "https://api.eosdetective.semiofficial.io/v0/";
+    public endpoint = "https://graph-api.eosdetective.io/v0/";
     public endpoint_eosio = "https://api.eosn.io";
     public actor = "";
     public permission = "";
@@ -62,7 +62,7 @@ export function config(token: string, options: {
     /**
      * EOS Detective API endpoint
      *
-     * @default "https://api.eosdetective.semiofficial.io/v0/"
+     * @default "https://graph-api.eosdetective.io/v0/"
      */
     endpoint?: string,
     /**
