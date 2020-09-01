@@ -101,13 +101,15 @@ export function convertQuantity(
   chain: string = "eos",
   toInteger = false
 ) {
-  let denom = 10000;
-  let precision = 4;
 
-  if (chain.toLowerCase() === "wax") {
-    denom = 100000000;
-    precision = 8;
+  const precisions: { [index: string]: number } = {
+    "eos": 4,
+    "wax": 8,
+    "box": 4
   }
+
+  const precision = precisions[chain.toLowerCase()];
+  const denom = 10 ** precision;
 
   if (toInteger) return Math.round(number * denom);
   else return preciseRound(number / denom, precision);
