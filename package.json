@@ -1,6 +1,6 @@
 {
   "name": "eos-detective",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "EOS Detective",
   "main": "dist/index.js",
   "types": "dist/index.d.js",
